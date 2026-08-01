@@ -1,0 +1,102 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sfc.javocab</groupId>
+    <artifactId>com.sfc.javocab</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>Javocab</name>
+
+    <parent>
+        <groupId>com.flowlogix</groupId>
+        <artifactId>payara-pom</artifactId>
+        <version>131</version>
+    </parent>
+
+    <properties>
+        <!-- Override target java release -->
+        <!-- <maven.compiler.release>25</maven.compiler.release> -->
+        <flowlogix.depchain.version>128</flowlogix.depchain.version>
+        <flowlogix.version>11.4.1</flowlogix.version>
+        <arquillian.graphene.version>3.0.1.Final</arquillian.graphene.version>
+        <checkstyle.suppressionsLocation>${maven.multiModuleProjectDirectory}/src/checkstyle/suppressions.xml</checkstyle.suppressionsLocation>
+        <checkstyle.headerLocation>${maven.multiModuleProjectDirectory}/src/checkstyle/apache-header.txt</checkstyle.headerLocation>
+        <maven.build.cache.enabled>false</maven.build.cache.enabled>
+        <!-- Turn on console logging for tests -->
+        <test.redirect.to.file>false</test.redirect.to.file>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakarta.ee.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.flowlogix.depchain</groupId>
+            <artifactId>integration-test</artifactId>
+            <version>${flowlogix.depchain.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.graphene</groupId>
+            <artifactId>graphene-webdriver</artifactId>
+            <version>${arquillian.graphene.version}</version>
+            <scope>test</scope>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.flowlogix</groupId>
+            <artifactId>flowlogix-jee</artifactId>
+            <version>${flowlogix.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <classifier>jakarta</classifier>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <includes>
+                        <include>com/sfc/javocab/**</include>
+                    </includes>
+                    <excludes>
+                        <exclude>com/sfc/javocab/*Test</exclude>
+                        <exclude>com/sfc/javocab/*Test$*</exclude>
+                        <exclude>com/sfc/javocab/*IT</exclude>
+                        <exclude>com/sfc/javocab/*IT$*</exclude>
+                        <exclude>**/*$Proxy$*WeldClientProxy</exclude>
+                        <exclude>**/*$Proxy$*WeldSubclass</exclude>
+                        <exclude>**/*$MockitoMock$*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
